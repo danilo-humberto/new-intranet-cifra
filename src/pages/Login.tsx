@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import FormLogin from "@/components/layout/FormLogin";
+import FormLogin from "@/components/FormLogin";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";

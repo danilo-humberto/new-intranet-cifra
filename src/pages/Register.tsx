@@ -1,5 +1,5 @@
 import Footer from "@/components/layout/Footer";
-import FormRegister from "@/components/layout/FormRegister";
+import FormRegister from "@/components/FormRegister";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 
