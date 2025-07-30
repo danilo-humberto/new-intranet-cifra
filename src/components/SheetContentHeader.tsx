@@ -1,10 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { CalendarSearch, Columns4, Settings, Users } from "lucide-react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
+import type { Dispatch, SetStateAction } from "react";
 
-const SheetContentHeader = () => {
-  const isActive = true;
+interface SheetContentHeaderProps {
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+const SheetContentHeader = ({ setOpen }: SheetContentHeaderProps) => {
+  const { pathname } = useLocation();
+  const checkIsActive = (path: string) => {
+    return pathname === path || pathname.startsWith(path + "/");
+  };
   return (
     <div>
       <figure className="p-3">
@@ -24,51 +32,67 @@ const SheetContentHeader = () => {
       </div>
       <Separator />
       <div className="p-3">
-        <div className="flex flex-col gap-2">
-          <Link
-            to={"/portais"}
-            className={`flex items-center gap-4 p-3 hover:bg-gold-yellow hover:text-background transition-colors duration-150 ${
-              isActive ? "bg-gold-yellow text-background" : ""
-            } rounded text-sm`}
-          >
-            <Columns4 size={16} />
-            <span>Portais</span>
-          </Link>
-          <Link
-            to={"/portais"}
-            className={`flex items-center gap-4 p-3 hover:bg-gold-yellow hover:text-background transition-colors duration-150 ${
-              !isActive ? "bg-gold-yellow text-background" : ""
-            } rounded text-sm`}
-          >
-            <CalendarSearch size={16} />
-            <span>Agenda Eletrônica</span>
-          </Link>
-        </div>
+        <ul className="flex flex-col gap-2">
+          <li onClick={() => setOpen(false)}>
+            <Link
+              to={"/portals"}
+              className={`flex items-center gap-4 p-3 transition-colors duration-150 ${
+                checkIsActive("/portals")
+                  ? "bg-gold-yellow text-background"
+                  : "hover:bg-muted"
+              } rounded text-sm`}
+            >
+              <Columns4 size={16} />
+              <span>Portais</span>
+            </Link>
+          </li>
+          <li onClick={() => setOpen(false)}>
+            <Link
+              to={"/eletronicDiary"}
+              className={`flex items-center gap-4 p-3 transition-colors duration-150 ${
+                checkIsActive("/eletronicDiary")
+                  ? "bg-gold-yellow text-background"
+                  : "hover:bg-muted"
+              } rounded text-sm`}
+            >
+              <CalendarSearch size={16} />
+              <span>Agenda Eletrônica</span>
+            </Link>
+          </li>
+        </ul>
       </div>
       <p className="text-sm text-muted-foreground uppercase px-3">
         Administração
       </p>
       <div className="p-3">
-        <div className="flex flex-col gap-2">
-          <Link
-            to={"/admin/portals"}
-            className={`flex items-center gap-4 p-3 hover:bg-gold-yellow hover:text-background transition-colors duration-150 ${
-              !isActive ? "bg-gold-yellow text-background" : ""
-            } rounded text-sm`}
-          >
-            <Settings size={16} />
-            <span>Gerenciar Portais</span>
-          </Link>
-          <Link
-            to={"/admin/users"}
-            className={`flex items-center gap-4 p-3 hover:bg-gold-yellow hover:text-background transition-colors duration-150 ${
-              !isActive ? "bg-gold-yellow text-background" : ""
-            } rounded text-sm`}
-          >
-            <Users size={16} />
-            <span>Gerenciar Usuários</span>
-          </Link>
-        </div>
+        <ul className="flex flex-col gap-2">
+          <li onClick={() => setOpen(false)}>
+            <Link
+              to={"/admin/portals"}
+              className={`flex items-center gap-4 p-3 transition-colors duration-150 ${
+                checkIsActive("/admin/portals")
+                  ? "bg-gold-yellow text-background"
+                  : "hover:bg-muted"
+              } rounded text-sm`}
+            >
+              <Settings size={16} />
+              <span>Gerenciar Portais</span>
+            </Link>
+          </li>
+          <li onClick={() => setOpen(false)}>
+            <Link
+              to={"/admin/users"}
+              className={`flex items-center gap-4 p-3 transition-colors duration-150 ${
+                checkIsActive("/admin/users")
+                  ? "bg-gold-yellow text-background"
+                  : "hover:bg-muted"
+              } rounded text-sm`}
+            >
+              <Users size={16} />
+              <span>Gerenciar Usuários</span>
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );
