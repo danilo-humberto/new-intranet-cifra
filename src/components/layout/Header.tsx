@@ -7,12 +7,12 @@ import { useSidebarState } from "@/stores/SidebarState";
 const Header = () => {
   const { toggle, open } = useSidebarState();
   return (
-    <header className="shadow-sm p-4 flex justify-between">
+    <header className="shadow-sm p-4 flex justify-between sticky top-0 z-40 bg-[#F7F8F9]">
       <div className="flex items-center gap-2">
         <div className="md:hidden">
           <MenuMobile />
         </div>
-        <Button variant="outline" onClick={toggle}>
+        <Button variant="outline" onClick={toggle} className="hidden md:flex">
           <ArrowBigRightDash
             size={16}
             className={`${open ? "rotate-180" : ""} text-muted-foreground`}
