@@ -123,4 +123,13 @@
   body {
     @apply bg-[#F7F8F9] text-foreground;
   }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
