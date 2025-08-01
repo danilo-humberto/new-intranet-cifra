@@ -190,7 +190,7 @@ const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
           <Tooltip delayDuration={200}>
             <TooltipTrigger asChild>
               <Link
-                to={"/login"}
+                to={"/"}
                 className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
               >
                 <div>
