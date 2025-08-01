@@ -6,6 +6,7 @@ import Portais from "./pages/Portais";
 import EletronicDiary from "./pages/EletronicDiary";
 import ManagementPortals from "./pages/admin/ManagementPortals";
 import ManagementUsers from "./pages/admin/ManagementUsers";
+import SessionExpiredDialog from "./components/dialogs/SessionExpiredDialog";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           }
         />
       </Routes>
+      <SessionExpiredDialog />
     </>
   );
 }
