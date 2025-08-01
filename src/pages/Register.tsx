@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Register = () => {
   return (
     <div className="min-h-screen w-screen flex flex-col items-center justify-center p-4">
-      <div className="bg-background py-4 px-6 rounded-sm shadow-md w-full xl:w-[30%]">
+      <div className="bg-background py-4 px-6 rounded-sm shadow-md w-full max-w-lg">
         <div>
           <img
             src="/logo-cifra-nova.png"
