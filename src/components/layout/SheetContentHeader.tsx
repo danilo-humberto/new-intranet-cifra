@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 import { CalendarSearch, Columns4, Settings, Users } from "lucide-react";
-import { Avatar, AvatarFallback } from "./ui/avatar";
 import type { Dispatch, SetStateAction } from "react";
 
 interface SheetContentHeaderProps {
@@ -18,18 +17,6 @@ const SheetContentHeader = ({ setOpen }: SheetContentHeaderProps) => {
       <figure className="p-3">
         <img src="/logo-cifra-nova.png" alt="" width={130} />
       </figure>
-      <Separator />
-      <div className="p-3">
-        <div className="flex items-center gap-3 px-1">
-          <Avatar>
-            <AvatarFallback>US</AvatarFallback>
-          </Avatar>
-          <div className="text-sm">
-            <p>Nome do Usuário</p>
-            <span className="text-muted-foreground text-xs">Cargo</span>
-          </div>
-        </div>
-      </div>
       <Separator />
       <div className="p-3">
         <ul className="flex flex-col gap-2">

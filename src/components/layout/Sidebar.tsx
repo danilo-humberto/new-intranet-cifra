@@ -4,8 +4,10 @@ import { Separator } from "../ui/separator";
 import {
   CalendarSearch,
   Columns4,
+  File,
   LogOut,
   Settings,
+  SquarePen,
   Users,
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
@@ -22,7 +24,7 @@ const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
 
   return (
     <div
-      className={`hidden md:block shadow-xl cursor-pointer relative bg-background min-h-screen transition-all duration-300 ${
+      className={`hidden md:block shadow-xl relative bg-background min-h-screen transition-all duration-300 ${
         open ? "w-80" : "w-16"
       }`}
     >
@@ -187,6 +189,55 @@ const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
 
       <div className="absolute bottom-0 border-t w-full">
         <div className="p-3">
+          <Tooltip delayDuration={200}>
+            <TooltipTrigger asChild>
+              <Link
+                to={"/edit-profile"}
+                className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
+              >
+                <div>
+                  <SquarePen size={16} />
+                </div>
+                <span
+                  className={`whitespace-pre duration-300 ${
+                    !open && "opacity-0 translate-x-24 overflow-hidden"
+                  } `}
+                >
+                  Editar Perfil
+                </span>
+              </Link>
+            </TooltipTrigger>
+            {!open && (
+              <TooltipContent side="right">
+                <p>Editar Perfil</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
+          <Tooltip delayDuration={200}>
+            <TooltipTrigger asChild>
+              <Link
+                to={"codigo-conduta-cifra.pdf"}
+                download={true}
+                className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
+              >
+                <div>
+                  <File size={16} />
+                </div>
+                <span
+                  className={`whitespace-pre duration-300 ${
+                    !open && "opacity-0 translate-x-24 overflow-hidden"
+                  } `}
+                >
+                  Codigo de Conduta
+                </span>
+              </Link>
+            </TooltipTrigger>
+            {!open && (
+              <TooltipContent side="right">
+                <p>Código de Conduta</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
           <Tooltip delayDuration={200}>
             <TooltipTrigger asChild>
               <Link
