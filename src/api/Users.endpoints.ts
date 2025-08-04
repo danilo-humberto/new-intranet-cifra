@@ -3,8 +3,6 @@ import api from "./axios";
 import type { User } from "@/types/User";
 import { useSessionAlert } from "@/stores/useSessionAlert";
 
-const token = getStorageItem("user");
-
 export const createUser = async (user: User) => {
   const { data } = await api.post(`/auth/register}`, user, {
     headers: {
@@ -15,10 +13,11 @@ export const createUser = async (user: User) => {
 };
 
 export const getUsers = async () => {
+  const token = getStorageItem("user")?.accessToken;
   const response = await api.get("/users", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (response.status === 401) {
@@ -29,29 +28,32 @@ export const getUsers = async () => {
 };
 
 export const deleteUser = async () => {
+  const token = getStorageItem("user")?.accessToken;
   await api.delete("/users", {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 };
 
 export const getUserById = async (id: string) => {
+  const token = getStorageItem("user")?.accessToken;
   const { data } = await api.get(`/user/${id}`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   return data;
 };
 
 export const updateUser = async (id: string, user: User) => {
+  const token = getStorageItem("user")?.accessToken;
   await api.put(`/user/${id}`, user, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token?.accessToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
 };
