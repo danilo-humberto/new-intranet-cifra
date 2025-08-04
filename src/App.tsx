@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Main from "./pages/Main";
+import Main from "./pages/Layout";
 import Portais from "./pages/Portais";
 import EletronicDiary from "./pages/EletronicDiary";
 import ManagementPortals from "./pages/admin/ManagementPortals";
