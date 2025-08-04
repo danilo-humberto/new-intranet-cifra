@@ -1,7 +1,17 @@
 import CardPortals from "@/components/CardPortals";
-import { Search } from "lucide-react";
+import { usePortals } from "@/hooks/usePortals";
+import type { Portals } from "@/types/Portals";
+import { Loader, Search } from "lucide-react";
+import { useState } from "react";
 
 const Portais = () => {
+  const { data, isLoading, isError } = usePortals();
+  const [searchText, setSearchText] = useState<string>("");
+
+  const filtredPortals = data?.filter((portal: Portals) => {
+    const match = portal.name.toLowerCase().includes(searchText.toLowerCase());
+    return match;
+  });
   return (
     <section className="py-4 px-5">
       <div className="flex flex-col gap-4 justify-between lg:flex-row">
@@ -15,20 +25,36 @@ const Portais = () => {
               id="portals"
               placeholder="Buscar portais..."
               className="outline-none border-none w-full"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-        {Array.from({ length: 10 }).map((_, index) => (
-          <CardPortals
-            key={index}
-            title="Portal 1"
-            description="lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, repellendus."
-            imageUrl="https://play-lh.googleusercontent.com/g3LS7hgd_gxh4FuVU9pBt60vybBtcj-endXIqfhM0bVyy7qTkDt7z1yQm6hbTyfXdu8"
-          />
-        ))}
-      </div>
+      {isLoading && (
+        <div className="text-muted-foreground flex flex-col gap-2 items-center justify-center mt-10">
+          <Loader className="animate-spin" />
+          <span>Carregando portais...</span>
+        </div>
+      )}
+      {isError ? (
+        <div className="flex flex-col gap-2 text-red-500 items-center justify-center mt-10">
+          <span className="text-2xl">404</span>
+          <span>Erro ao carregar portais.</span>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+          {filtredPortals?.map((portal: Portals) => (
+            <CardPortals
+              key={portal._id}
+              title={portal.name}
+              description={portal.shortDescription}
+              imageUrl={portal.image}
+              id={portal._id}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 };

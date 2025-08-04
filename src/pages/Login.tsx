@@ -4,10 +4,35 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useLogin } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import axios from "axios";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const login = useLogin();
+
+  const handleLogin = (e: React.FormEvent, email: string, password: string) => {
+    e.preventDefault();
+
+    login.mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          toast.success("Login realizado com sucesso!");
+          navigate("/portals");
+        },
+        onError: (error) => {
+          if (axios.isAxiosError(error)) {
+            toast.error("Email ou senha incorretos.");
+          } else {
+            toast.error("Erro ao realizar login.");
+          }
+        },
+      }
+    );
+  };
 
   return (
     <div className="min-h-screen w-screen flex flex-col items-center justify-center p-4">
@@ -39,7 +64,7 @@ const Login = () => {
           </div>
         ) : (
           <>
-            <FormLogin />
+            <FormLogin onSubmit={handleLogin} isPending={login.isPending} />
             <Separator className="my-4" />
 
             <div className="text-sm flex items-center gap-1 justify-center">

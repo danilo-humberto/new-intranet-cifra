@@ -1,11 +1,21 @@
-import { Eye, EyeClosed, Lock, Mail } from "lucide-react";
+import { Eye, EyeClosed, Loader, Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const FormLogin = () => {
+interface FormLoginProps {
+  onSubmit: (e: React.FormEvent, email: string, password: string) => void;
+  isPending?: boolean;
+}
+
+const FormLogin = ({ onSubmit, isPending }: FormLoginProps) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <form className="mt-4 flex flex-col gap-4">
+    <form
+      className="mt-4 flex flex-col gap-4"
+      onSubmit={(e) => onSubmit(e, email, password)}
+    >
       <div>
         <label htmlFor="email" className="text-sm">
           Email
@@ -18,6 +28,8 @@ const FormLogin = () => {
             className="text-sm outline-none border-none w-full"
             name="email"
             id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
       </div>
@@ -33,6 +45,8 @@ const FormLogin = () => {
             className="text-sm outline-none border-none w-full"
             name="password"
             id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {showPassword ? (
             <button
@@ -53,8 +67,15 @@ const FormLogin = () => {
           )}
         </div>
       </div>
-      <Button variant="default" type="submit">
-        Entrar
+      <Button variant="default" type="submit" disabled={isPending}>
+        {isPending ? (
+          <p className="flex items-center gap-2">
+            <Loader size={16} className="animate-spin" />
+            <span className="ml-2">Entrando...</span>
+          </p>
+        ) : (
+          "Entrar"
+        )}
       </Button>
     </form>
   );

@@ -1,7 +1,17 @@
 import DiaryTable from "@/components/DiaryTable";
-import { Search } from "lucide-react";
+import { useUsers } from "@/hooks/useUsers";
+import type { User } from "@/types/User";
+import { Loader, Search } from "lucide-react";
+import { useState } from "react";
 
 const EletronicDiary = () => {
+  const { data, isLoading, isError } = useUsers();
+  const [searchText, setSearchText] = useState<string>("");
+
+  const filtredUsers = data?.filter((user: User) => {
+    const match = user.name.toLowerCase().includes(searchText.toLowerCase());
+    return match;
+  });
   return (
     <section className="py-4 px-5">
       <div className="flex flex-col gap-4 justify-between lg:flex-row">
@@ -15,11 +25,26 @@ const EletronicDiary = () => {
               id="portals"
               placeholder="Buscar funcionário..."
               className="outline-none border-none w-full"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
         </div>
       </div>
-      <DiaryTable />
+      {isLoading && (
+        <div className="text-muted-foreground flex flex-col gap-2 items-center justify-center mt-10">
+          <Loader className="animate-spin" />
+          <span>Carregando portais...</span>
+        </div>
+      )}
+      {isError ? (
+        <div className="flex flex-col gap-2 text-red-500 items-center justify-center mt-10">
+          <span className="text-2xl">404</span>
+          <span>Erro ao carregar portais.</span>
+        </div>
+      ) : (
+        <DiaryTable users={filtredUsers} />
+      )}
     </section>
   );
 };

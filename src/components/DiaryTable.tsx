@@ -1,3 +1,4 @@
+import type { User } from "@/types/User";
 import {
   Table,
   TableBody,
@@ -7,7 +8,11 @@ import {
   TableRow,
 } from "./ui/table";
 
-const DiaryTable = () => {
+interface DiaryTableProps {
+  users: User[] | [];
+}
+
+const DiaryTable = ({ users }: DiaryTableProps) => {
   return (
     <Table className="mt-4">
       <TableHeader>
@@ -26,15 +31,15 @@ const DiaryTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {Array.from({ length: 15 }).map((_, index) => (
-          <TableRow key={index}>
-            <TableCell className="py-6">Danilo Humberto Paz de Melo</TableCell>
-            <TableCell>danilohumberto@cifraengenharia.com.br</TableCell>
-            <TableCell>(81) 98321-5029</TableCell>
-            <TableCell>(81) 91111-1111</TableCell>
-            <TableCell>Desenvolvedor Júnior</TableCell>
-            <TableCell>Pernambuco</TableCell>
-            <TableCell>Recife</TableCell>
+        {users.map((user) => (
+          <TableRow key={user._id}>
+            <TableCell className="py-6">{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.number}</TableCell>
+            <TableCell>{user.personalNumber}</TableCell>
+            <TableCell>{user.function}</TableCell>
+            <TableCell>{user.state}</TableCell>
+            <TableCell>{user.lotation}</TableCell>
           </TableRow>
         ))}
       </TableBody>

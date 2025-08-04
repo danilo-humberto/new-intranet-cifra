@@ -3,12 +3,18 @@ import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
 interface CardPortalsProps {
+  id?: string;
   title: string;
   description: string;
   imageUrl: string;
 }
 
-const CardPortals = ({ title, description, imageUrl }: CardPortalsProps) => {
+const CardPortals = ({
+  title,
+  description,
+  imageUrl,
+  id,
+}: CardPortalsProps) => {
   return (
     <div className="border border-input rounded-sm p-4 flex flex-col gap-3 transition-all duration-150 hover:shadow">
       <div className="flex items-center">
@@ -18,7 +24,7 @@ const CardPortals = ({ title, description, imageUrl }: CardPortalsProps) => {
         <h2 className="text-lg font-semibold truncate pl-2">{title}</h2>
       </div>
       <p className="text-muted-foreground text-sm ">{description}</p>
-      <Link to={"/portals/:id"}>
+      <Link to={`/portals/${id}`}>
         <Button variant="outline" className="flex-1 w-full group" size="lg">
           Ver Detalhes
           <ArrowRight
