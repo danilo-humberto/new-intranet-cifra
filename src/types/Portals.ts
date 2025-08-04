@@ -1,4 +1,5 @@
 export interface Portals {
+  _id?: string;
   name: string;
   responsible: string;
   description: string;
