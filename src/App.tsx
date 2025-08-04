@@ -7,6 +7,7 @@ import EletronicDiary from "./pages/EletronicDiary";
 import ManagementPortals from "./pages/admin/ManagementPortals";
 import ManagementUsers from "./pages/admin/ManagementUsers";
 import SessionExpiredDialog from "./components/dialogs/SessionExpiredDialog";
+import PortalDetails from "./pages/PortalDetails";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Main>
               <Routes>
                 <Route path="portals" element={<Portais />} />
+                <Route path="portals/:id" element={<PortalDetails />} />
                 <Route path="eletronicDiary" element={<EletronicDiary />} />
                 <Route path="admin/portals" element={<ManagementPortals />} />
                 <Route path="admin/users" element={<ManagementUsers />} />
