@@ -20,6 +20,6 @@ const processAuthResponse = (data: any) => {
     accessToken: data.token,
     ...data.user,
   };
-  setStorageItem("user", JSON.stringify(userData));
+  setStorageItem("user", userData);
   return userData;
 };
