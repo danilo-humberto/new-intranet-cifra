@@ -8,12 +8,11 @@ import {
 import type { Portals } from "@/types/Portals";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 
-export const usePortals = () => {
+export const usePortals = () =>
   useQuery({
     queryKey: ["portals"],
-    queryFn: () => getPortals(),
+    queryFn: getPortals,
   });
-};
 
 export const usePortalsById = (portalId: string) =>
   useQuery({
