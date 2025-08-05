@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Main from "./pages/Layout";
+import Layout from "./pages/Layout";
 import Portais from "./pages/Portais";
 import EletronicDiary from "./pages/EletronicDiary";
 import ManagementPortals from "./pages/admin/ManagementPortals";
@@ -18,7 +18,7 @@ function App() {
         <Route
           path="/*"
           element={
-            <Main>
+            <Layout>
               <Routes>
                 <Route path="portals" element={<Portais />} />
                 <Route path="portals/:id" element={<PortalDetails />} />
@@ -26,7 +26,7 @@ function App() {
                 <Route path="admin/portals" element={<ManagementPortals />} />
                 <Route path="admin/users" element={<ManagementUsers />} />
               </Routes>
-            </Main>
+            </Layout>
           }
         />
       </Routes>

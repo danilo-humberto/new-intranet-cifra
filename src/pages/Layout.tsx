@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
 
-const Main = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   const isAdmin = true;
   return (
     <>
@@ -18,4 +18,4 @@ const Main = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Main;
+export default Layout;
