@@ -4,7 +4,7 @@ import type { User } from "@/types/User";
 import { useSessionAlert } from "@/stores/useSessionAlert";
 
 export const createUser = async (user: User) => {
-  const { data } = await api.post(`/auth/register}`, user, {
+  const { data } = await api.post(`/auth/register`, user, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -27,9 +27,9 @@ export const getUsers = async () => {
   return response.data;
 };
 
-export const deleteUser = async () => {
+export const deleteUser = async (id: string) => {
   const token = getStorageItem("user")?.accessToken;
-  await api.delete("/users", {
+  await api.delete(`/user/${id}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

@@ -24,22 +24,27 @@ export const getPortals = async () => {
 
 export const getPortalsById = async (portalId: string) => {
   const token = getStorageItem("user")?.accessToken;
-  const response = await api.get(`/portal/${portalId}?_embed=inscriptions`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (response.status === 401) {
-    useSessionAlert.getState().setOpen(true);
-    return;
+
+  try {
+    const { data } = await api.get(`/portals/${portalId}?_embed=inscriptions`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error: any) {
+    if (error.response?.status === 401) {
+      useSessionAlert.getState().setOpen(true);
+    }
+    throw error;
   }
-  return response.data;
 };
 
-export const deletePortal = async (portalid: string) => {
+export const deletePortal = async (portalId: string) => {
   const token = getStorageItem("user")?.accessToken;
-  await api.delete(`/portals/${portalid}`, {
+  await api.delete(`/portals/${portalId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
