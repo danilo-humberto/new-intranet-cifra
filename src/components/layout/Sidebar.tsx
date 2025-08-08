@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useSidebarState } from "@/stores/SidebarState";
+import { getStorageItem } from "@/utils/Storage";
+import { useUserById } from "@/hooks/useUsers";
 
-const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
+const Sidebar = () => {
   const { pathname } = useLocation();
 
   const { open } = useSidebarState();
@@ -21,6 +23,11 @@ const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
   const checkIsActive = (path: string) => {
     return pathname === path || pathname.startsWith(path + "/");
   };
+
+  const user = getStorageItem("user");
+
+  const { data } = useUserById(user?._id || "");
+  const isAdmin = user?.roles[0].code === "1";
 
   return (
     <div
@@ -40,15 +47,19 @@ const Sidebar = ({ isAdmin }: { isAdmin: boolean }) => {
       <div className="p-3">
         <div className="flex items-center gap-3 px-1">
           <Avatar>
-            <AvatarFallback>US</AvatarFallback>
+            <AvatarFallback className="uppercase">
+              {data && data.user.name.slice(0, 2)}
+            </AvatarFallback>
           </Avatar>
           <div
             className={`whitespace-pre duration-300 text-sm ${
               !open && "opacity-0 translate-x-24 overflow-hidden"
             } `}
           >
-            <p>Nome do Usuário</p>
-            <span className="text-muted-foreground text-xs">Cargo</span>
+            <p className="capitalize">{data && data.user.name}</p>
+            <span className="text-muted-foreground text-xs capitalize">
+              {(data && data.user.function) || "Sem Cargo"}
+            </span>
           </div>
         </div>
       </div>

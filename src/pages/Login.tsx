@@ -2,14 +2,14 @@ import Footer from "@/components/layout/Footer";
 import FormLogin from "@/components/FormLogin";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import axios from "axios";
+import { getStorageItem } from "@/utils/Storage";
 
 const Login = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = !!getStorageItem("user");
   const navigate = useNavigate();
   const login = useLogin();
 
@@ -57,7 +57,7 @@ const Login = () => {
             <Button
               variant="default"
               className="w-full mt-4"
-              onClick={() => navigate("/dashboard")}
+              onClick={() => navigate("/portals")}
             >
               Entrar
             </Button>
