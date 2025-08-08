@@ -45,13 +45,7 @@ const Portais = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
           {filtredPortals?.map((portal: Portals) => (
-            <CardPortals
-              key={portal._id}
-              title={portal.name}
-              description={portal.shortDescription}
-              imageUrl={portal.image}
-              id={portal._id}
-            />
+            <CardPortals key={portal._id} portal={portal} />
           ))}
         </div>
       )}
