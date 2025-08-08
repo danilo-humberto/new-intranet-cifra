@@ -18,8 +18,55 @@ import {
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "../ui/button";
 
-const UsersDialog = () => {
+interface emptyFormData {
+  name: string;
+  email: string;
+  number: string;
+  personalNumber: string;
+  function: string;
+  state: string;
+  lotation: string;
+  password?: string;
+  roleCodes: { code: string }[];
+}
+
+interface UsersDialogProps {
+  initialValue: emptyFormData;
+}
+
+const UsersDialog = ({ initialValue }: UsersDialogProps) => {
+  const [formData, setFormData] = useState(initialValue);
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === "number" || name === "personalNumber") {
+      let cleanedValue = value.replace(/\D/g, "");
+      if (cleanedValue.length > 11) {
+        cleanedValue = cleanedValue.slice(0, 11);
+      }
+
+      let numberFormatted = cleanedValue;
+
+      if (cleanedValue.length > 2) {
+        numberFormatted = `(${cleanedValue.slice(0, 2)}) ${cleanedValue.slice(
+          2,
+          7
+        )}-${cleanedValue.slice(7)}`;
+      }
+
+      setFormData({
+        ...formData,
+        [name]: numberFormatted,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
   return (
     <DialogContent className="max-h-[95vh] overflow-y-auto md:max-w-xl scrollbar-hide">
       <DialogHeader>
@@ -36,6 +83,8 @@ const UsersDialog = () => {
             type="text"
             placeholder="Nome do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.name || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -48,6 +97,8 @@ const UsersDialog = () => {
             type="email"
             placeholder="Email do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.email || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -60,6 +111,8 @@ const UsersDialog = () => {
             type="text"
             placeholder="Telefone funcional do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.number || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -73,6 +126,8 @@ const UsersDialog = () => {
             type="text"
             placeholder="Telefone pessoal do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.personalNumber || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -86,6 +141,8 @@ const UsersDialog = () => {
             type="text"
             placeholder="Cargo do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.function || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -99,6 +156,8 @@ const UsersDialog = () => {
             type="text"
             placeholder="Estado do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.state || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
@@ -112,13 +171,20 @@ const UsersDialog = () => {
             type="text"
             placeholder="Lotação do usuário"
             className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
+            value={formData?.lotation || ""}
+            onChange={handleChange}
           />
         </div>
         <div className="flex flex-col gap-1 text-sm">
           <label htmlFor="lotation" className="font-semibold">
             Role
           </label>
-          <Select>
+          <Select
+            onValueChange={(value) =>
+              setFormData({ ...formData, roleCodes: [{ code: value }] })
+            }
+            value={formData?.roleCodes[0]?.code}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Selecione uma role" />
             </SelectTrigger>
@@ -198,6 +264,8 @@ const UsersDialog = () => {
               type={showPassword ? "text" : "password"}
               placeholder="Senha do usuário"
               className="border-none outline-none w-full"
+              value={formData?.password || ""}
+              onChange={handleChange}
             />
             {showPassword ? (
               <EyeOff
