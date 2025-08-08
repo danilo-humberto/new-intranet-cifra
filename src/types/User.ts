@@ -8,5 +8,11 @@ export interface User {
   function?: string;
   state?: string;
   lotation?: string;
-  roles: string[];
+  roles: {
+    _id: string;
+    cargo: string;
+    empresa: string;
+    contrato: string;
+    code: string;
+  }[];
 }
