@@ -103,7 +103,7 @@ const ManagementePortalsTable = ({ portals }: ManagementePortalsTableProps) => {
                       details: portal.details,
                     }}
                     handleSubmit={handleEdit}
-                    isPending={isPending}
+                    isPending={portalEdit.isPending}
                     title="Editar Portal"
                   />
                 </Dialog>

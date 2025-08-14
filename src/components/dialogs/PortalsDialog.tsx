@@ -75,7 +75,7 @@ const PortalsDialog = ({
     value: string
   ) => {
     setData((prev) => {
-      const details = [...(prev.details ?? [])];
+      const details = [...prev.details];
       details[index] = { ...details[index], [field]: value };
       return { ...prev, details };
     });
@@ -90,7 +90,7 @@ const PortalsDialog = ({
       <DialogHeader>
         <DialogTitle className="text-start">{title}</DialogTitle>
       </DialogHeader>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-2 mt-4">
           <div className="flex flex-col gap-1 text-sm">
             <label htmlFor="name" className="font-semibold">
@@ -302,7 +302,11 @@ const PortalsDialog = ({
             Cancelar
           </Button>
         </DialogClose>
-        <Button type="submit" className="flex-1" onClick={() => onSubmit}>
+        <Button
+          type="submit"
+          className="flex-1"
+          onClick={() => handleSubmit(data)}
+        >
           {isPending ? (
             <>
               <Loader className="animate-spin mr-2" />

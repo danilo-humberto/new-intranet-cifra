@@ -35,23 +35,23 @@ const ManagementPortals = () => {
   };
   return (
     <section className="py-4 px-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <h2 className="text-2xl font-semibold">📋 Portais</h2>
-        <div className="flex gap-2 flex-row-reverse">
+        <div className="flex gap-2 flex-col md:flex-row-reverse">
           <div className="flex items-center h-10 gap-2 border border-input rounded-sm p-2 text-sm w-80 focus-within:border-gold-yellow">
             <Search size={20} className="text-muted-foreground" />
             <input
               type="text"
               name="users"
               id="users"
-              placeholder="Buscar usuários..."
+              placeholder="Buscar portais..."
               className="outline-none border-none w-full"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <Button
                 variant="default"
                 size={"lg"}
@@ -59,7 +59,7 @@ const ManagementPortals = () => {
                 disabled={isLoading}
               >
                 <Plus />
-                Novo Usuário
+                Novo Portal
               </Button>
             </DialogTrigger>
             <PortalsDialog
