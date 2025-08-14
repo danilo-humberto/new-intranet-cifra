@@ -8,6 +8,9 @@ import ManagementPortals from "./pages/admin/ManagementPortals";
 import ManagementUsers from "./pages/admin/ManagementUsers";
 import SessionExpiredDialog from "./components/dialogs/SessionExpiredDialog";
 import PortalDetails from "./pages/PortalDetails";
+import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
+import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
   return (
@@ -15,21 +18,21 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route
-          path="/*"
-          element={
-            <Layout>
-              <Routes>
-                <Route path="portals" element={<Portais />} />
-                <Route path="portals/:id" element={<PortalDetails />} />
-                <Route path="eletronicDiary" element={<EletronicDiary />} />
-                <Route path="admin/portals" element={<ManagementPortals />} />
-                <Route path="admin/users" element={<ManagementUsers />} />
-              </Routes>
-            </Layout>
-          }
-        />
+
+        <Route element={<PrivateRoute />}>
+          <Route element={<Layout />}>
+            <Route path="portals" element={<Portais />} />
+            <Route path="portals/:id" element={<PortalDetails />} />
+            <Route path="eletronicDiary" element={<EletronicDiary />} />
+            <Route path="admin/portals" element={<ManagementPortals />} />
+            <Route path="admin/users" element={<ManagementUsers />} />
+            <Route path="profile" element={<Profile />} />
+          </Route>
+        </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
+
       <SessionExpiredDialog />
     </>
   );
