@@ -1,6 +1,6 @@
 import DiaryTable from "@/components/DiaryTable";
 import { useUsers } from "@/hooks/useUsers";
-import type { User } from "@/types/User";
+import type { UserResponse } from "@/types/User";
 import { Loader, Search } from "lucide-react";
 import { useState } from "react";
 
@@ -8,7 +8,7 @@ const EletronicDiary = () => {
   const { data, isLoading, isError } = useUsers();
   const [searchText, setSearchText] = useState<string>("");
 
-  const filtredUsers = data?.filter((user: User) => {
+  const filtredUsers = data?.filter((user: UserResponse) => {
     const match = user.name.toLowerCase().includes(searchText.toLowerCase());
     return match;
   });

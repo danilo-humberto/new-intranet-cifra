@@ -1,4 +1,4 @@
-import type { User } from "@/types/User";
+import type { UserResponse } from "@/types/User";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
 import { getStorageItem } from "@/utils/Storage";
 
 interface DiaryTableProps {
-  users: User[] | [];
+  users: UserResponse[] | [];
 }
 
 const DiaryTable = ({ users }: DiaryTableProps) => {
