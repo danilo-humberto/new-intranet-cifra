@@ -1,20 +1,38 @@
-import AddPortalsDialog from "@/components/dialogs/PortalsDialog";
+import PortalsDialog from "@/components/dialogs/PortalsDialog";
 import ManagementePortalsTable from "@/components/ManagementPortalsTable";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { usePortals } from "@/hooks/usePortals";
+import { useCreatePortal, usePortals } from "@/hooks/usePortals";
 import type { Portals } from "@/types/Portals";
 import { Loader, Plus, Search } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ManagementPortals = () => {
   const { data, isLoading, isError } = usePortals();
   const [searchText, setSearchText] = useState<string>("");
+  const portal = useCreatePortal();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const filtredPortals = data?.filter((portals: Portals) => {
     const match = portals.name.toLowerCase().includes(searchText.toLowerCase());
     return match;
   });
+
+  const handleSubmit = (data: Portals) => {
+    portal.mutate(data, {
+      onSuccess: () => {
+        toast.success("Portal criado com sucesso!");
+      },
+      onError: (error: any) => {
+        if (error.response) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("Erro ao criar portal.");
+        }
+      },
+    });
+  };
   return (
     <section className="py-4 px-5">
       <div className="flex items-center justify-between">
@@ -32,21 +50,31 @@ const ManagementPortals = () => {
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
-          <Dialog>
-            <form>
-              <DialogTrigger>
-                <Button
-                  variant="default"
-                  size={"lg"}
-                  type="button"
-                  disabled={isLoading}
-                >
-                  <Plus />
-                  Novo Usuário
-                </Button>
-              </DialogTrigger>
-              <AddPortalsDialog />
-            </form>
+          <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <DialogTrigger>
+              <Button
+                variant="default"
+                size={"lg"}
+                type="button"
+                disabled={isLoading}
+              >
+                <Plus />
+                Novo Usuário
+              </Button>
+            </DialogTrigger>
+            <PortalsDialog
+              initialValue={{
+                name: "",
+                description: "",
+                responsible: "",
+                shortDescription: "",
+                image: "",
+                _id: "",
+                details: [],
+              }}
+              handleSubmit={handleSubmit}
+              isPending={portal.isPending}
+            />
           </Dialog>
         </div>
       </div>

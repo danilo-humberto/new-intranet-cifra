@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "./ui/table";
 import type { Portals } from "@/types/Portals";
-import { useDeletePortal } from "@/hooks/usePortals";
+import { useDeletePortal, useEditPortal } from "@/hooks/usePortals";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -21,12 +21,39 @@ import {
   AlertDialogTrigger,
   AlertDialogCancel,
 } from "./ui/alert-dialog";
+import { useState } from "react";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import PortalsDialog from "./dialogs/PortalsDialog";
 interface ManagementePortalsTableProps {
   portals: Portals[];
 }
 
 const ManagementePortalsTable = ({ portals }: ManagementePortalsTableProps) => {
   const { mutate, isPending } = useDeletePortal();
+  const portalEdit = useEditPortal();
+  const [portalEditId, setPortalEditId] = useState<string | null>(null);
+
+  const handleEdit = (portal: Portals) => {
+    portalEdit.mutate(
+      {
+        id: portal._id!,
+        portal,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Portal editado com sucesso!");
+          setPortalEditId(null);
+        },
+        onError: (error: any) => {
+          if (error.response) {
+            toast.error(error.response.data.msg);
+          } else {
+            toast.error("Erro ao editar portal.");
+          }
+        },
+      }
+    );
+  };
 
   const handleDelete = (id: string) => {
     mutate(id, {
@@ -54,9 +81,32 @@ const ManagementePortalsTable = ({ portals }: ManagementePortalsTableProps) => {
             <TableCell>{portal.responsible}</TableCell>
             <TableCell>
               <div className="flex gap-2">
-                <Button variant="default" size="icon">
-                  <SquarePen size={16} />
-                </Button>
+                <Dialog
+                  open={portalEditId === portal._id}
+                  onOpenChange={(open) =>
+                    setPortalEditId(open ? portal._id! : null)
+                  }
+                >
+                  <DialogTrigger asChild>
+                    <Button variant="default" size="icon">
+                      <SquarePen size={16} />
+                    </Button>
+                  </DialogTrigger>
+                  <PortalsDialog
+                    initialValue={{
+                      _id: portal._id,
+                      name: portal.name,
+                      responsible: portal.responsible,
+                      description: portal.description,
+                      shortDescription: portal.shortDescription,
+                      image: portal.image,
+                      details: portal.details,
+                    }}
+                    handleSubmit={handleEdit}
+                    isPending={isPending}
+                    title="Editar Portal"
+                  />
+                </Dialog>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button variant="destructive" size="icon">
