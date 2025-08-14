@@ -41,9 +41,9 @@ const ManagementUsers = () => {
   };
   return (
     <section className="py-4 px-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
         <h2 className="text-2xl font-semibold">👤 Usuários</h2>
-        <div className="flex gap-2 flex-row-reverse">
+        <div className="flex gap-2 flex-col md:flex-row-reverse">
           <div className="flex items-center h-10 gap-2 border border-input rounded-sm p-2 text-sm w-80 focus-within:border-gold-yellow">
             <Search size={20} className="text-muted-foreground" />
             <input
