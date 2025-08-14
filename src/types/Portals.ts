@@ -5,13 +5,11 @@ export interface Portals {
   description: string;
   shortDescription: string;
   image: string;
-  details: [
-    {
-      url: string;
-      baseLink: string;
-      updateSchedule: string;
-      nameForm: string;
-      emailResponsible: string;
-    }
-  ];
+  details: {
+    url?: string;
+    baseLink?: string;
+    updateSchedule?: string;
+    nameForm?: string;
+    emailResponsible?: string;
+  }[];
 }
