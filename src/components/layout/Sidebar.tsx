@@ -15,7 +15,11 @@ import { useSidebarState } from "@/stores/SidebarState";
 import { getStorageItem } from "@/utils/Storage";
 import { useUserById } from "@/hooks/useUsers";
 
-const Sidebar = () => {
+interface SidebarProps {
+  isAdmin: boolean;
+}
+
+const Sidebar = ({ isAdmin }: SidebarProps) => {
   const { pathname } = useLocation();
 
   const { open } = useSidebarState();
@@ -27,7 +31,6 @@ const Sidebar = () => {
   const user = getStorageItem("user");
 
   const { data } = useUserById(user?._id || "");
-  const isAdmin = user && user?.roles?.[0].code === "1";
 
   return (
     <div
@@ -203,7 +206,7 @@ const Sidebar = () => {
           <Tooltip delayDuration={200}>
             <TooltipTrigger asChild>
               <Link
-                to={"/edit-profile"}
+                to={"/profile"}
                 className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
               >
                 <div>

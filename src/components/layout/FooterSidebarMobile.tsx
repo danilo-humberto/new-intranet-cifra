@@ -23,7 +23,7 @@ const FooterSidebar = () => {
       <PopoverContent className="p-2">
         <div className="p-2 flex flex-col gap-2 text-sm">
           <Link
-            to={"/edit-profile"}
+            to={"/profile"}
             className="flex items-center gap-2 transition-all duration-150 hover:bg-muted rounded-sm p-2"
           >
             <SquarePen size={16} />
