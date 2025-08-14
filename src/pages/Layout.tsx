@@ -1,8 +1,10 @@
 import Header from "@/components/layout/Header";
 import Sidebar from "@/components/layout/Sidebar";
+import { getStorageItem } from "@/utils/Storage";
+import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const isAdmin = true;
+const Layout = () => {
+  const isAdmin = getStorageItem("user")?.roles?.[0].code === "1";
   return (
     <>
       <div className="flex">
@@ -11,7 +13,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           className={`flex flex-col w-full transition-all duration-300 max-h-screen overflow-y-scroll`}
         >
           <Header />
-          <main>{children}</main>
+          <main>
+            <Outlet />
+          </main>
         </div>
       </div>
     </>
