@@ -24,7 +24,7 @@ const Header = () => {
       </div>
       <Avatar className="select-none">
         <AvatarFallback className="uppercase">
-          {user?.name.slice(0, 2)}
+          {user?.name?.slice(0, 2)}
         </AvatarFallback>
       </Avatar>
     </header>

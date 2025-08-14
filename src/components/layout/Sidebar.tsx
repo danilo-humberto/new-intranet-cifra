@@ -27,7 +27,7 @@ const Sidebar = () => {
   const user = getStorageItem("user");
 
   const { data } = useUserById(user?._id || "");
-  const isAdmin = user?.roles[0].code === "1";
+  const isAdmin = user && user?.roles?.[0].code === "1";
 
   return (
     <div
