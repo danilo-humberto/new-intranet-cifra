@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import type { User } from "@/types/User";
-import { useDeleteUser, useUserById } from "@/hooks/useUsers";
+import type { UserPayload, UserResponse } from "@/types/User";
+import { useDeleteUser, useEditUser } from "@/hooks/useUsers";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -23,13 +23,38 @@ import {
 import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import UsersDialog from "./dialogs/UsersDialog";
+import { useState } from "react";
 
 interface ManagementUsersTableProps {
-  users: User[];
+  users: UserResponse[];
 }
 
 const ManagementUsersTable = ({ users }: ManagementUsersTableProps) => {
   const { mutate, isPending } = useDeleteUser();
+  const userEdit = useEditUser();
+  const [editOpenId, setEditOpenId] = useState<string | null>(null);
+
+  const handleEdit = (user: UserPayload) => {
+    userEdit.mutate(
+      {
+        id: user._id!,
+        user,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Usuário editado com sucesso!");
+          setEditOpenId(null);
+        },
+        onError: (error: any) => {
+          if (error.response) {
+            toast.error(error.response.data.msg);
+          } else {
+            toast.error("Erro ao editar usuário.");
+          }
+        },
+      }
+    );
+  };
 
   const handleDelete = (id: string) => {
     mutate(id, {
@@ -53,70 +78,72 @@ const ManagementUsersTable = ({ users }: ManagementUsersTableProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => {
-          const { data } = useUserById(users[0]._id || "");
-          return (
-            <TableRow key={user._id}>
-              <TableCell className="py-6">{user.name}</TableCell>
-              <TableCell>{user.email}</TableCell>
-              <TableCell>{user.function}</TableCell>
-              <TableCell>{user.number}</TableCell>
-              <TableCell>
-                <div className="flex gap-2">
-                  <Dialog>
-                    <form>
-                      <DialogTrigger asChild>
-                        <Button variant="default" size="icon">
-                          <SquarePen size={16} />
-                        </Button>
-                      </DialogTrigger>
-                      <UsersDialog
-                        initialValue={{
-                          name: data.name,
-                          email: data.email,
-                          function: data.function || "",
-                          number: data.number,
-                          lotation: data.lotation || "",
-                          state: data.state || "",
-                          personalNumber: data.personalNumber || "",
-                          roleCodes: data.roles.map((role) => ({
-                            code: role.code,
-                          })),
-                        }}
-                      />
-                    </form>
-                  </Dialog>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="icon">
-                        <Trash size={16} />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        Você deseja realmente apagar esse usuário?
-                      </AlertDialogHeader>
-                      <AlertDialogDescription>
-                        Essa ação não pode ser desfeita. Isso vai apagar
-                        permanentemente o usuário e seus dados, incluindo seus
-                        arquivos e sessões de login.
-                      </AlertDialogDescription>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                        <AlertDialogAction
-                          disabled={isPending}
-                          onClick={() => handleDelete(user._id || "")}
-                        >
-                          Apagar
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
-              </TableCell>
-            </TableRow>
-          );
-        })}
+        {users.map((user) => (
+          <TableRow key={user._id}>
+            <TableCell className="py-6">{user.name}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{user.function}</TableCell>
+            <TableCell>{user.number}</TableCell>
+            <TableCell>
+              <div className="flex gap-2">
+                <Dialog
+                  open={editOpenId === user._id}
+                  onOpenChange={(open) =>
+                    setEditOpenId(open ? user._id! : null)
+                  }
+                >
+                  <DialogTrigger asChild>
+                    <Button variant="default" size="icon">
+                      <SquarePen size={16} />
+                    </Button>
+                  </DialogTrigger>
+                  <UsersDialog
+                    initialValue={{
+                      _id: user._id,
+                      name: user.name,
+                      email: user.email,
+                      function: user.function || "",
+                      number: user.number,
+                      lotation: user.lotation || "",
+                      state: user.state || "",
+                      personalNumber: user.personalNumber || "",
+                      roleCodes: user.roles.map((role) => role.code),
+                    }}
+                    handleSubmit={handleEdit}
+                    isPending={userEdit.isPending}
+                    title="Editar Usuário"
+                  />
+                </Dialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="icon">
+                      <Trash size={16} />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      Você deseja realmente apagar esse usuário?
+                    </AlertDialogHeader>
+                    <AlertDialogDescription>
+                      Essa ação não pode ser desfeita. Isso vai apagar
+                      permanentemente o usuário e seus dados, incluindo seus
+                      arquivos e sessões de login.
+                    </AlertDialogDescription>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        disabled={isPending}
+                        onClick={() => handleDelete(user._id || "")}
+                      >
+                        Apagar
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

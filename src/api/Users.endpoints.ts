@@ -1,9 +1,9 @@
 import { getStorageItem, setStorageItem } from "@/utils/Storage";
 import api from "./axios";
-import type { User } from "@/types/User";
+import type { UserPayload } from "@/types/User";
 import { useSessionAlert } from "@/stores/useSessionAlert";
 
-export const createUser = async (user: User) => {
+export const createUser = async (user: UserPayload) => {
   const { data } = await api.post(`/auth/register`, user, {
     headers: {
       "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const getUserById = async (id: string) => {
   return data;
 };
 
-export const updateUser = async (id: string, user: User) => {
+export const updateUser = async (id: string, user: UserPayload) => {
   const token = getStorageItem("user")?.accessToken;
   await api.put(`/user/${id}`, user, {
     headers: {
