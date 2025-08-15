@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import {
   CalendarSearch,
@@ -12,8 +11,7 @@ import {
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useSidebarState } from "@/stores/SidebarState";
-import { getStorageItem, removeStorageItem } from "@/utils/Storage";
-import { useUserById } from "@/hooks/useUsers";
+import { removeStorageItem } from "@/utils/Storage";
 
 interface SidebarProps {
   isAdmin: boolean;
@@ -28,10 +26,6 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
   const checkIsActive = (path: string) => {
     return pathname === path || pathname.startsWith(path + "/");
   };
-
-  const user = getStorageItem("user");
-
-  const { data } = useUserById(user?._id || "");
 
   const handleLogout = () => {
     removeStorageItem("user");
@@ -52,27 +46,6 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
         />
       </figure>
 
-      <Separator />
-      <div className="p-3">
-        <div className="flex items-center gap-3 px-1">
-          <Avatar>
-            <AvatarImage src={data && data.user.image}></AvatarImage>
-            <AvatarFallback className="uppercase">
-              {data && data.user.name.slice(0, 2)}
-            </AvatarFallback>
-          </Avatar>
-          <div
-            className={`whitespace-pre duration-300 text-sm ${
-              !open && "opacity-0 translate-x-24 overflow-hidden"
-            } `}
-          >
-            <p className="capitalize">{data && data.user.name}</p>
-            <span className="text-muted-foreground text-xs capitalize">
-              {(data && data.user.function) || "Sem Cargo"}
-            </span>
-          </div>
-        </div>
-      </div>
       <Separator />
       <div className="p-3">
         <div className="flex flex-col gap-2">
@@ -240,8 +213,8 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
           </Tooltip>
           <Tooltip delayDuration={200}>
             <TooltipTrigger asChild>
-              <Link
-                to={"codigo-conduta-cifra.pdf"}
+              <a
+                href="codigo-conduta-cifra.pdf"
                 download={true}
                 className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
               >
@@ -255,7 +228,7 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
                 >
                   Codigo de Conduta
                 </span>
-              </Link>
+              </a>
             </TooltipTrigger>
             {!open && (
               <TooltipContent side="right">
