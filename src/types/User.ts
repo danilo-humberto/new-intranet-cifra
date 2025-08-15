@@ -8,6 +8,7 @@ export interface UserResponse {
   function?: string;
   state?: string;
   lotation?: string;
+  image?: string;
   roles: {
     _id?: string;
     cargo?: string;
@@ -26,6 +27,7 @@ export interface UserPayload {
   function?: string;
   state?: string;
   lotation?: string;
+  image?: string;
   password?: string;
   roleCodes: string[];
 }
