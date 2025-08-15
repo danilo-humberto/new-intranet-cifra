@@ -79,16 +79,20 @@ const PortalDetails = () => {
                 {data?.details.map((item: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell className="py-6">{item.nameForm}</TableCell>
-                    <TableCell>
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 underline"
-                      >
-                        {isBi ? "Acessar BI" : "Acessar"}
-                      </a>
-                    </TableCell>
+                    {item.url !== "" ? (
+                      <TableCell>
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-500 underline"
+                        >
+                          {isBi ? "Acessar BI" : "Acessar"}
+                        </a>
+                      </TableCell>
+                    ) : (
+                      <TableCell></TableCell>
+                    )}
                     {isBi && (
                       <>
                         <TableCell>
