@@ -13,7 +13,7 @@ const Layout = () => {
           className={`flex flex-col w-full transition-all duration-300 max-h-screen overflow-y-scroll`}
         >
           <Header />
-          <main>
+          <main className="w-full max-w-[1800px] mx-auto flex-1">
             <Outlet />
           </main>
         </div>
