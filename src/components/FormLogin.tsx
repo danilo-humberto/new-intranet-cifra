@@ -54,7 +54,7 @@ const FormLogin = ({ onSubmit, isPending }: FormLoginProps) => {
               onClick={() => setShowPassword(false)}
               className="cursor-pointer"
             >
-              <Eye size={16} />
+              <EyeClosed size={16} />
             </button>
           ) : (
             <button
@@ -62,7 +62,7 @@ const FormLogin = ({ onSubmit, isPending }: FormLoginProps) => {
               onClick={() => setShowPassword(true)}
               className="cursor-pointer"
             >
-              <EyeClosed size={16} />
+              <Eye size={16} />
             </button>
           )}
         </div>
