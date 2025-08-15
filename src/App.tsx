@@ -11,8 +11,12 @@ import PortalDetails from "./pages/PortalDetails";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import PrivateRoute from "./pages/PrivateRoute";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    localStorage.removeItem("@auth/user");
+  }, []);
   return (
     <>
       <Routes>
