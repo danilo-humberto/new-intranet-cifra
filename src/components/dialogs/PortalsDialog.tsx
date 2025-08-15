@@ -286,6 +286,7 @@ const PortalsDialog = ({
                   <Button
                     variant="destructive"
                     onClick={() => handleRemoveDetails(index)}
+                    type="button"
                   >
                     <Trash size={16} />
                     <span>Remover Dados</span>
