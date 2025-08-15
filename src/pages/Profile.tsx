@@ -58,7 +58,7 @@ const Profile = () => {
         </div>
       ) : (
         <form
-          className="flex flex-col md:flex-row gap-30 w-full mt-8 md:max-w-[1280px] md:mx-auto"
+          className="flex flex-col gap-10 lg:flex-row lg:gap-30 w-full mt-8 md:max-w-[1280px] md:mx-auto"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col gap-2">
@@ -77,7 +77,10 @@ const Profile = () => {
                 />
               )}
             </figure>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2 text-sm">
+              <label htmlFor="image" className="font-semibold">
+                Imagem de Perfil
+              </label>
               <input
                 name="image"
                 id="image"
@@ -253,7 +256,7 @@ const Profile = () => {
             </div>
             <Button
               size={"lg"}
-              className="mt-2 md:w-1/3 self-center"
+              className="mt-2 w-full lg:w-1/3 self-center"
               type="submit"
             >
               Atualizar
