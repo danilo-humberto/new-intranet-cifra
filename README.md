@@ -1,69 +1,47 @@
-# React + TypeScript + Vite
+# 🚀 Reestruturação da Intranet Corporativa da CIFRA Engenharia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Reestruturação completa da intranet da empresa, **rápida e moderna**, construída com tecnologias de ponta.
 
-Currently, two official plugins are available:
+## 🛠 Tecnologias
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Vite** → Build rápido e otimizado
+- **TailwindCSS** → Estilo responsivo e consistente
+- **React Query** → Cache e gerenciamento de dados assíncronos
+- **Shadcn/UI** → Componentes modernos e acessíveis
+- **Zustand** → Estado global simples e performático
 
-## Expanding the ESLint configuration
+## ✨ Principais Melhorias
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **⚡ Performance** otimizada no carregamento
+- **📱 Layout 100% responsivo**
+- **🎨 Interface padronizada e moderna**
+- **💾 Cache inteligente de dados**
+- **⚙️ Código organizado e escalável**
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Como Rodar
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+```bash
+# 1. Clonar o repositório
+git clone https://github.com/danilo-humberto/new-intranet-cifra.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 2. Acessar a pasta do projeto
+cd new-intranet-cifra
+
+# 3. Instalar dependências
+npm install
+
+# 4. Executar em ambiente de desenvolvimento
+npm run dev
+
+# 5. Build para produção
+npm run build
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📌 Considerações
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Essa reestruturação deixa a intranet preparada para o futuro, com **melhor experiência para o usuário final** e **facilidade para a equipe de desenvolvimento continuar evoluindo o sistema**. O foco foi **entregar velocidade, usabilidade e manutenção simplificada.**
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🙌 Agradecimento
+
+Agradeço ao **[Danilo Brun](https://github.com/danilobrun)**, Gerente de TI da **Cifra Engenharia**, por confiar e me proporcionar a oportunidade de liderar essa reestruturação e contribuir para gerar valor à empresa.
