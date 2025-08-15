@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "./ui/table";
 import { getStorageItem } from "@/utils/Storage";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface DiaryTableProps {
   users: UserResponse[] | [];
@@ -24,6 +25,7 @@ const DiaryTable = ({ users }: DiaryTableProps) => {
           <TableHead className="text-muted-foreground">
             Telefone Funcional
           </TableHead>
+          <TableHead></TableHead>
           {storage?.roles[0].code === "1" && (
             <TableHead className="text-muted-foreground">
               Telefone Pessoal
@@ -38,8 +40,21 @@ const DiaryTable = ({ users }: DiaryTableProps) => {
         {users?.map((user) => (
           <TableRow key={user._id}>
             <TableCell className="py-6">{user.name}</TableCell>
-            <TableCell>{user.email}</TableCell>
+            <TableCell>
+              <a href={`mailto:${user.email}`}>{user.email}</a>
+            </TableCell>
             <TableCell>{user.number}</TableCell>
+            <TableCell>
+              <a
+                href={`https://wa.me/55${user.number.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {user.number && (
+                  <FaWhatsapp size={25} className="text-green-500" />
+                )}
+              </a>
+            </TableCell>
             {storage?.roles[0].code === "1" && (
               <TableCell>{user.personalNumber}</TableCell>
             )}
