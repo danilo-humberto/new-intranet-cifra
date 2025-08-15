@@ -24,12 +24,28 @@ const Header = () => {
         </Button>
         <p className="text-xl font-bold capitalize">Intranet Cifra</p>
       </div>
-      <Avatar className="select-none">
-        <AvatarImage src={data?.user?.image} alt={userData?.name} />
-        <AvatarFallback className="uppercase">
-          {userData?.name?.slice(0, 2)}
-        </AvatarFallback>
-      </Avatar>
+      <div className="select-none flex items-center gap-2">
+        <div className="flex-col text-xs text-muted-foreground items-end hidden md:flex">
+          <p>
+            Olá, <span className="uppercase">{userData?.name}</span>
+          </p>
+          {data?.user?.function ? (
+            <p>{data?.user?.function}</p>
+          ) : (
+            <p>Sem Cargo</p>
+          )}
+        </div>
+        <Avatar>
+          <AvatarImage
+            src={data?.user?.image}
+            alt={userData?.name}
+            className="shrink-0"
+          />
+          <AvatarFallback className="uppercase">
+            {userData?.name?.slice(0, 2)}
+          </AvatarFallback>
+        </Avatar>
+      </div>
     </header>
   );
 };
