@@ -23,10 +23,11 @@ const ManagementPortals = () => {
     portal.mutate(data, {
       onSuccess: () => {
         toast.success("Portal criado com sucesso!");
+        setOpenDialog(false);
       },
       onError: (error: any) => {
         if (error.response) {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.msg);
         } else {
           toast.error("Erro ao criar portal.");
         }

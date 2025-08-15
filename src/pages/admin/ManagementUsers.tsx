@@ -36,7 +36,7 @@ const ManagementUsers = () => {
       },
       onError: (error: any) => {
         if (error.response) {
-          toast.error(error.response.data.message);
+          toast.error(error.response.data.msg);
         } else {
           toast.error("Erro ao criar usuário.");
         }
