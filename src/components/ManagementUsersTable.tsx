@@ -35,10 +35,14 @@ const ManagementUsersTable = ({ users }: ManagementUsersTableProps) => {
   const [editOpenId, setEditOpenId] = useState<string | null>(null);
 
   const handleEdit = (user: UserPayload) => {
+    const userToSend = { ...user };
+    if (!userToSend.password || userToSend.password.trim() === "") {
+      delete userToSend.password;
+    }
     userEdit.mutate(
       {
         id: user._id!,
-        user,
+        user: userToSend,
       },
       {
         onSuccess: () => {

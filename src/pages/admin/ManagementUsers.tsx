@@ -25,6 +25,10 @@ const ManagementUsers = () => {
         "Email inválido. Use o domínio @cifraengenharia.com.br"
       );
     }
+
+    if (!data.password) {
+      return toast.error("O campo Senha não pode ficar vazio. Preencha-o.");
+    }
     user.mutate(data, {
       onSuccess: () => {
         toast.success("Usuário criado com sucesso!");
