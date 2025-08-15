@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
 import {
   CalendarSearch,
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useSidebarState } from "@/stores/SidebarState";
-import { getStorageItem } from "@/utils/Storage";
+import { getStorageItem, removeStorageItem } from "@/utils/Storage";
 import { useUserById } from "@/hooks/useUsers";
 
 interface SidebarProps {
@@ -21,6 +21,7 @@ interface SidebarProps {
 
 const Sidebar = ({ isAdmin }: SidebarProps) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const { open } = useSidebarState();
 
@@ -31,6 +32,11 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
   const user = getStorageItem("user");
 
   const { data } = useUserById(user?._id || "");
+
+  const handleLogout = () => {
+    removeStorageItem("user");
+    navigate("/");
+  };
 
   return (
     <div
@@ -50,6 +56,7 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
       <div className="p-3">
         <div className="flex items-center gap-3 px-1">
           <Avatar>
+            <AvatarImage src={data && data.user.image}></AvatarImage>
             <AvatarFallback className="uppercase">
               {data && data.user.name.slice(0, 2)}
             </AvatarFallback>
@@ -207,7 +214,11 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
             <TooltipTrigger asChild>
               <Link
                 to={"/profile"}
-                className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
+                className={`flex items-center gap-4 p-3 transition-colors duration-150 ${
+                  checkIsActive("/profile")
+                    ? "bg-gold-yellow text-background"
+                    : "hover:bg-muted"
+                } rounded text-sm`}
               >
                 <div>
                   <SquarePen size={16} />
@@ -257,6 +268,7 @@ const Sidebar = ({ isAdmin }: SidebarProps) => {
               <Link
                 to={"/"}
                 className={`flex items-center gap-4 p-3 hover:bg-muted transition-colors duration-150 rounded text-sm`}
+                onClick={handleLogout}
               >
                 <div>
                   <LogOut size={16} className="text-red-500" />
