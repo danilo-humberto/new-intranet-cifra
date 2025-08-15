@@ -17,7 +17,7 @@ const MenuMobile = () => {
       <SheetContent side="left">
         <SheetContentHeader setOpen={setOpen} />
         <SheetFooter className="border-t">
-          <FooterSidebarMobile />
+          <FooterSidebarMobile setOpen={setOpen} />
         </SheetFooter>
       </SheetContent>
     </Sheet>
