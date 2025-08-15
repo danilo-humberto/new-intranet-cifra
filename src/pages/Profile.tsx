@@ -5,6 +5,7 @@ import { Eye, EyeOff, Loader } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import InputMask from "@kerim-keskin/react-input-mask";
 
 const Profile = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,6 @@ const Profile = () => {
   useEffect(() => {
     if (userData) {
       setData(userData?.user);
-      console.log(userData);
     }
   }, [userData]);
 
@@ -134,30 +134,44 @@ const Profile = () => {
               <label htmlFor="number" className="font-semibold">
                 Telefone Funcional
               </label>
-              <input
+              <InputMask
+                mask={
+                  (data?.number?.replace(/\D/g, "") || "").length > 2 &&
+                  "(99) 99999-9999"
+                }
+                maskChar={null}
                 name="number"
                 id="number"
                 type="text"
                 placeholder="Telefone funcional do usuário"
                 className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
                 value={data?.number ?? ""}
-                onChange={(e) => setData({ ...data!, number: e.target.value })}
+                onChange={(e: any) =>
+                  setData({ ...data!, number: e.target.value })
+                }
+                inputMode="numeric"
               />
             </div>
             <div className="flex flex-col gap-1 text-sm">
               <label htmlFor="personalNumber" className="font-semibold">
                 Telefone Pessoal
               </label>
-              <input
+              <InputMask
+                mask={
+                  (data?.number?.replace(/\D/g, "") || "").length > 2 &&
+                  "(99) 99999-9999"
+                }
+                maskChar={null}
                 name="personalNumber"
                 id="personalNumber"
                 type="text"
                 placeholder="Telefone pessoal do usuário"
                 className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
                 value={data?.personalNumber ?? ""}
-                onChange={(e) =>
+                onChange={(e: any) =>
                   setData({ ...data!, personalNumber: e.target.value })
                 }
+                inputMode="numeric"
               />
             </div>
             <div className="flex flex-col gap-1 text-sm">

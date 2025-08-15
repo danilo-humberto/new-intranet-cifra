@@ -18,6 +18,7 @@ import {
 import { Eye, EyeOff, Loader } from "lucide-react";
 import { Button } from "../ui/button";
 import type { UserPayload } from "@/types/User";
+import InputMask from "@kerim-keskin/react-input-mask";
 
 interface UsersDialogProps {
   initialValue: UserPayload;
@@ -37,32 +38,7 @@ const UsersDialog = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === "number" || name === "personalNumber") {
-      let cleanedValue = value.replace(/\D/g, "");
-      if (cleanedValue.length > 11) {
-        cleanedValue = cleanedValue.slice(0, 11);
-      }
-
-      let numberFormatted = cleanedValue;
-
-      if (cleanedValue.length > 2) {
-        numberFormatted = `(${cleanedValue.slice(0, 2)}) ${cleanedValue.slice(
-          2,
-          7
-        )}-${cleanedValue.slice(7)}`;
-      }
-
-      setFormData({
-        ...formData,
-        [name]: numberFormatted,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -108,7 +84,12 @@ const UsersDialog = ({
             <label htmlFor="number" className="font-semibold">
               Telefone Funcional
             </label>
-            <input
+            <InputMask
+              mask={
+                (formData?.number?.replace(/\D/g, "") || "").length > 2 &&
+                "(99) 99999-9999"
+              }
+              maskChar={null}
               name="number"
               id="number"
               type="text"
@@ -116,6 +97,7 @@ const UsersDialog = ({
               className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
               value={formData?.number || ""}
               onChange={handleChange}
+              inputMode="numeric"
             />
           </div>
           <div className="flex flex-col gap-1 text-sm">
@@ -123,7 +105,12 @@ const UsersDialog = ({
               Telefone Pessoal{" "}
               <span className="text-xs text-muted-foreground">(opcional)</span>
             </label>
-            <input
+            <InputMask
+              mask={
+                (formData?.number?.replace(/\D/g, "") || "").length > 2 &&
+                "(99) 99999-9999"
+              }
+              maskChar={null}
               name="personalNumber"
               id="personalNumber"
               type="text"
@@ -131,6 +118,7 @@ const UsersDialog = ({
               className="border border-input px-2 py-3 rounded-sm focus:border-gold-yellow outline-none"
               value={formData?.personalNumber || ""}
               onChange={handleChange}
+              inputMode="numeric"
             />
           </div>
           <div className="flex flex-col gap-1 text-sm">
