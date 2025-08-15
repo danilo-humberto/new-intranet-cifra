@@ -86,17 +86,13 @@ const ManagementUsers = () => {
           <Loader className="animate-spin" />
           <span>Carregando...</span>
         </div>
+      ) : isError ? (
+        <div className="flex flex-col gap-2 text-red-500 items-center justify-center mt-10">
+          <span className="text-2xl">404</span>
+          <span>Erro ao carregar portais.</span>
+        </div>
       ) : (
-        <>
-          {isError ? (
-            <div className="flex flex-col gap-2 text-red-500 items-center justify-center mt-10">
-              <span className="text-2xl">404</span>
-              <span>Erro ao carregar portais.</span>
-            </div>
-          ) : (
-            <ManagementUsersTable users={filtredPortals} />
-          )}
-        </>
+        <ManagementUsersTable users={filtredPortals} />
       )}
     </section>
   );
